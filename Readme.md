@@ -1,7 +1,7 @@
 # Личный проект «Менеджер задач» [![Build status][travis-image]][travis-url]
 
-* Студент: [Иван Горбунов](https://up.htmlacademy.ru/ecmascript/8/user/236647).
-* Наставник: `Неизвестно`.
+- Студент: [Иван Горбунов](https://up.htmlacademy.ru/ecmascript/8/user/236647).
+- Наставник: [Константин Мамаев](https://htmlacademy.ru/profile/meison).
 
 ---
 
