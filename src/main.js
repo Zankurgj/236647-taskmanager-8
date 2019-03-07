@@ -399,13 +399,11 @@ const initCardNumber = 4;
 gererateTasksCard(initCardNumber);
 
 const filterButtons = document.querySelectorAll(`.filter__input`);
+const randomCardsNumber = () => Math.floor(1 + Math.random() * 10);
 
 Array.from(filterButtons).forEach(filterButton => {
-  filterButton.addEventListener(`click`, () => {
-    while (tasksCardContainer.firstChild) {
-      tasksCardContainer.removeChild(tasksCardContainer.firstChild);
-    }
-    const randomCardsNumber = Math.floor(1 + Math.random() * 10);
-    gererateTasksCard(randomCardsNumber);
+  filterButton.addEventListener(`change`, () => {
+    tasksCardContainer.innerHTML = "";
+    gererateTasksCard(randomCardsNumber());
   });
 });
