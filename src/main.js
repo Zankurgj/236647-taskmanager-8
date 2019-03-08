@@ -1,5 +1,6 @@
-const templateFilters = [
-  `<input
+"use strict";
+
+const templateFilters = [`<input
   type="radio"
   id="filter__all"
   class="filter__input visually-hidden"
@@ -7,12 +8,10 @@ const templateFilters = [
   checked
   />
   <label for="filter__all" class="filter__label">
-  ALL <span class="filter__all-count">${Math.floor(
-    1 + Math.random() * 50
-  )}</span></label
+  ALL <span class="filter__all-count">${Math.floor(1 + Math.random() * 50)}</span></label
   >`,
 
-  `<input
+`<input
   type="radio"
   id="filter__overdue"
   class="filter__input visually-hidden"
@@ -20,11 +19,9 @@ const templateFilters = [
   disabled
   />
   <label for="filter__overdue" class="filter__label"
-  >OVERDUE <span class="filter__overdue-count">${Math.floor(
-    1 + Math.random() * 50
-  )}</span></label
+  >OVERDUE <span class="filter__overdue-count">${Math.floor(1 + Math.random() * 50)}</span></label
   >`,
-  `<input
+`<input
   type="radio"
   id="filter__today"
   class="filter__input visually-hidden"
@@ -32,53 +29,43 @@ const templateFilters = [
   disabled
   />
   <label for="filter__today" class="filter__label"
-    >TODAY <span class="filter__today-count">${Math.floor(
-      1 + Math.random() * 50
-    )}</span></label
+    >TODAY <span class="filter__today-count">${Math.floor(1 + Math.random() * 50)}</span></label
   >`,
-  `<input
+`<input
   type="radio"
   id="filter__favorites"
   class="filter__input visually-hidden"
   name="filter"
   />
   <label for="filter__favorites" class="filter__label"
-  >FAVORITES <span class="filter__favorites-count">${Math.floor(
-    1 + Math.random() * 50
-  )}</span></label
+  >FAVORITES <span class="filter__favorites-count">${Math.floor(1 + Math.random() * 50)}</span></label
   >`,
-  `<input
+`<input
   type="radio"
   id="filter__repeating"
   class="filter__input visually-hidden"
   name="filter"
   />
   <label for="filter__repeating" class="filter__label"
-    >Repeating <span class="filter__repeating-count">${Math.floor(
-      1 + Math.random() * 50
-    )}</span></label
+    >Repeating <span class="filter__repeating-count">${Math.floor(1 + Math.random() * 50)}</span></label
   >`,
-  `<input
+`<input
   type="radio"
   id="filter__tags"
   class="filter__input visually-hidden"
   name="filter"
   />
   <label for="filter__tags" class="filter__label"
-    >Tags <span class="filter__tags-count">${Math.floor(
-      1 + Math.random() * 50
-    )}</span></label
+    >Tags <span class="filter__tags-count">${Math.floor(1 + Math.random() * 50)}</span></label
   >`,
-  `<input
+`<input
   type="radio"
   id="filter__archive"
   class="filter__input visually-hidden"
   name="filter"
   />
   <label for="filter__archive" class="filter__label"
-  >ARCHIVE <span class="filter__archive-count">${Math.floor(
-    1 + Math.random() * 50
-  )}</span></label
+  >ARCHIVE <span class="filter__archive-count">${Math.floor(1 + Math.random() * 50)}</span></label
   >`
 ];
 
@@ -375,7 +362,7 @@ It is example of repeating task. It marks by wave.</textarea
 </form>
 </article>`;
 
-addScreenElement = template => {
+const addScreenElement = (template) => {
   const wrapper = document.createElement(`div`);
   wrapper.innerHTML = template.trim();
   return wrapper;
@@ -383,13 +370,13 @@ addScreenElement = template => {
 
 const filterContainer = document.querySelector(`.main__filter`);
 
-templateFilters.forEach(templateFilter => {
+templateFilters.forEach((templateFilter) => {
   filterContainer.appendChild(addScreenElement(templateFilter));
 });
 
 const tasksCardContainer = document.querySelector(`.board__tasks`);
 
-const gererateTasksCard = cardNumber => {
+const gererateTasksCard = (cardNumber) => {
   for (let i = 0; i <= cardNumber - 1; i++) {
     tasksCardContainer.appendChild(addScreenElement(templateTaskCard));
   }
@@ -398,12 +385,9 @@ const gererateTasksCard = cardNumber => {
 const initCardNumber = 4;
 gererateTasksCard(initCardNumber);
 
-const filterButtons = document.querySelectorAll(`.filter__input`);
 const randomCardsNumber = () => Math.floor(1 + Math.random() * 10);
 
-Array.from(filterButtons).forEach(filterButton => {
-  filterButton.addEventListener(`change`, () => {
-    tasksCardContainer.innerHTML = "";
-    gererateTasksCard(randomCardsNumber());
-  });
+filterContainer.addEventListener(`change`, () => {
+  tasksCardContainer.innerHTML = ``;
+  gererateTasksCard(randomCardsNumber());
 });
