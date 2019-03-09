@@ -1,5 +1,3 @@
-"use strict";
-
 const templateFilters = [`<input
   type="radio"
   id="filter__all"
