@@ -1,4 +1,4 @@
-export default () => `<article class="card card--pink card--repeat">
+export default () => `<article class="card card--pink  ${isRepeating() ? `card--repeat` : ``}">
 <form class="card__form" method="get">
   <div class="card__inner">
     <div class="card__control">
@@ -28,8 +28,7 @@ export default () => `<article class="card card--pink card--repeat">
           class="card__text"
           placeholder="Start typing your text here..."
           name="text"
-        >
-It is example of repeating task. It marks by wave.</textarea
+        >${task.title}</textarea
         >
       </label>
     </div>
@@ -41,12 +40,12 @@ It is example of repeating task. It marks by wave.</textarea
             date: <span class="card__date-status">no</span>
           </button>
 
-          <fieldset class="card__date-deadline" disabled>
+          <fieldset class="card__date-deadline" ${task.dueDate ? `` : `disabled`}>
             <label class="card__input-deadline-wrap">
               <input
                 class="card__date"
                 type="text"
-                placeholder="23 September"
+                placeholder="${new Date(task.dueDate).getDate().toString()} ${new Date(task.dueDate).toLocaleString(`en-us`, {month: `long`})}"
                 name="date"
               />
             </label>
@@ -54,7 +53,7 @@ It is example of repeating task. It marks by wave.</textarea
               <input
                 class="card__time"
                 type="text"
-                placeholder="11:15 PM"
+                placeholder="${new Date(task.dueDate).toLocaleString(`en-us`, {hour: `numeric`, minute: `numeric`, hour12: true})}"
                 name="time"
               />
             </label>
@@ -145,50 +144,7 @@ It is example of repeating task. It marks by wave.</textarea
 
         <div class="card__hashtag">
           <div class="card__hashtag-list">
-            <span class="card__hashtag-inner">
-              <input
-                type="hidden"
-                name="hashtag"
-                value="repeat"
-                class="card__hashtag-hidden-input"
-              />
-              <button type="button" class="card__hashtag-name">
-                #repeat
-              </button>
-              <button type="button" class="card__hashtag-delete">
-                delete
-              </button>
-            </span>
-
-            <span class="card__hashtag-inner">
-              <input
-                type="hidden"
-                name="hashtag"
-                value="repeat"
-                class="card__hashtag-hidden-input"
-              />
-              <button type="button" class="card__hashtag-name">
-                #cinema
-              </button>
-              <button type="button" class="card__hashtag-delete">
-                delete
-              </button>
-            </span>
-
-            <span class="card__hashtag-inner">
-              <input
-                type="hidden"
-                name="hashtag"
-                value="repeat"
-                class="card__hashtag-hidden-input"
-              />
-              <button type="button" class="card__hashtag-name">
-                #entertaiment
-              </button>
-              <button type="button" class="card__hashtag-delete">
-                delete
-              </button>
-            </span>
+            ${tagsItem}
           </div>
 
           <label>
@@ -202,14 +158,14 @@ It is example of repeating task. It marks by wave.</textarea
         </div>
       </div>
 
-      <label class="card__img-wrap card__img-wrap--empty">
+      <label class="card__img-wrap ${task.picture ? `` : `card__img-wrap--empty`}">
         <input
           type="file"
           class="card__img-input visually-hidden"
           name="img"
         />
         <img
-          src="img/add-photo.svg"
+          src="${task.picture}"
           alt="task picture"
           class="card__img"
         />
@@ -290,3 +246,55 @@ It is example of repeating task. It marks by wave.</textarea
   </div>
 </form>
 </article>`;
+
+
+// data js
+const task = {
+  title: [
+    `Prepare for the pitch`,
+    `find money for travel`,
+    `eat something`,
+  ][Math.floor(Math.random() * 3)],
+  dueDate: Date.now() + 1 + Math.floor(Math.random() * 7) * 24 * 60 * 60 * 1000,
+  tags: new Set([
+    `cinema`,
+    `entertainment`,
+    `myself`,
+    `cinema`,
+  ]),
+  picture: `//picsum.photos/100/100?r=${Math.random()}`,
+  repeatingDays: {
+    'mo': false,
+    'tu': false,
+    'we': false,
+    'th': true,
+    'fr': false,
+    'sa': false,
+    'su': false,
+  },
+};
+
+const tagsItem = [...task.tags].map((tagItem) =>
+  `<span class="card__hashtag-inner">
+<input
+  type="hidden"
+  name="hashtag"
+  value="repeat"
+  class="card__hashtag-hidden-input"
+/>
+<button type="button" class="card__hashtag-name">
+  #${tagItem}
+</button>
+<button type="button" class="card__hashtag-delete">
+  delete
+</button>
+</span>`).join(``);
+
+const isRepeating = () => {
+  for (let key in task.repeatingDays) {
+    if (task.repeatingDays[key]) {
+      return true;
+    }
+  }
+  return false;
+};
