@@ -1,4 +1,4 @@
-export default () => `<article class="card card--pink  ${isRepeating() ? `card--repeat` : ``}">
+export default (task) => `<article class="card card--${task.color}  ${isRepeating(task) ? `card--repeat` : ``}">
 <form class="card__form" method="get">
   <div class="card__inner">
     <div class="card__control">
@@ -10,7 +10,7 @@ export default () => `<article class="card card--pink  ${isRepeating() ? `card--
       </button>
       <button
         type="button"
-        class="card__btn card__btn--favorites card__btn--disabled"
+        class="card__btn card__btn--favorites ${task.isFavorite ? `card__btn--disabled` : ``}"
       >
         favorites
       </button>
@@ -144,7 +144,7 @@ export default () => `<article class="card card--pink  ${isRepeating() ? `card--
 
         <div class="card__hashtag">
           <div class="card__hashtag-list">
-            ${tagsItem}
+            ${tagsItem(task)}
           </div>
 
           <label>
@@ -248,33 +248,7 @@ export default () => `<article class="card card--pink  ${isRepeating() ? `card--
 </article>`;
 
 
-// data js
-const task = {
-  title: [
-    `Prepare for the pitch`,
-    `find money for travel`,
-    `eat something`,
-  ][Math.floor(Math.random() * 3)],
-  dueDate: Date.now() + 1 + Math.floor(Math.random() * 7) * 24 * 60 * 60 * 1000,
-  tags: new Set([
-    `cinema`,
-    `entertainment`,
-    `myself`,
-    `cinema`,
-  ]),
-  picture: `//picsum.photos/100/100?r=${Math.random()}`,
-  repeatingDays: {
-    'mo': false,
-    'tu': false,
-    'we': false,
-    'th': true,
-    'fr': false,
-    'sa': false,
-    'su': false,
-  },
-};
-
-const tagsItem = [...task.tags].map((tagItem) =>
+const tagsItem = (task) => [...task.tags].slice(-3).map((tagItem) =>
   `<span class="card__hashtag-inner">
 <input
   type="hidden"
@@ -290,7 +264,7 @@ const tagsItem = [...task.tags].map((tagItem) =>
 </button>
 </span>`).join(``);
 
-const isRepeating = () => {
+const isRepeating = (task) => {
   for (let key in task.repeatingDays) {
     if (task.repeatingDays[key]) {
       return true;
@@ -298,3 +272,4 @@ const isRepeating = () => {
   }
   return false;
 };
+

@@ -1,5 +1,7 @@
 import templateTaskCard from './templateTaskCard.module.js';
 import templateFilters from './templateFilters.module.js';
+import getTask from './data.js';
+
 
 const addScreenElement = (template) => {
   const wrapper = document.createElement(`div`);
@@ -21,7 +23,7 @@ const tasksCardContainer = document.querySelector(`.board__tasks`);
 
 const gererateTasksCard = (cardNumber) => {
   for (let i = 0; i <= cardNumber - 1; i++) {
-    tasksCardContainer.appendChild(addScreenElement(templateTaskCard()));
+    tasksCardContainer.appendChild(addScreenElement(templateTaskCard(getTask())));
   }
 };
 const initCardNumber = 4;
